@@ -1,0 +1,18 @@
+Package: ddImpute
+Type: Package
+Title: Imputation in single cell RNA-seq data from correlations in both dimensions  
+Version: 0.1.0
+Authors@R: c(
+    person("Kaiyi", "Zhu", email = "kaiyi.zhu@columbia.edu", role = c("aut", "cre")), 
+    person("Dimitris", "Anastassiou", email = "d.anastassiou@columbia.edu", role = "aut")
+    )
+Maintainer: Kaiyi Zhu <kaiyi.zhu@columbia.edu>
+Description: An imputation method for correcting false zeros (known as dropouts) in single cell RNA sequencing (scRNA-seq) data. It features making use of the interrelationships between both genes and cells in the expression matrix, preventing excessive correction and predicting dropout values accurately.
+Imports: 
+    cafr, 
+    jaccard, 
+    purrr
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
