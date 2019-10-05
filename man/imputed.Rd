@@ -3,7 +3,7 @@
 \docType{data}
 \name{imputed}
 \alias{imputed}
-\title{Output of function \code{\link{ddImpute}}}
+\title{Example output of function \code{\link{ddImpute}}}
 \format{An object of class \code{matrix} with 3774 rows and 338 columns.}
 \usage{
 data(imputed)

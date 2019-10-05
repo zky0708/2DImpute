@@ -16,45 +16,50 @@
 
 "ge_10x_sample"
 
-#' Output of function \code{\link{findDropouts}}
+#' Example output of function \code{\link{findDropouts}}
 #' 
 #' The results of performing dropout identification on data 
 #' \code{\link{ge_10x_sample}}. A list consisting of
-#' \item{dropout_ind}{A matrix in which each row contains the indices of a dropout}
-#' \item{J}{Calculated pairwise Jaccard Index between cells}
+#' \describe{
+#'     \item{dropout_ind}{A matrix in which each row contains the indices of a dropout}
+#'     \item{J}{Calculated pairwise Jaccard Index between cells}
+#' }
 #' 
 #' @usage data(results1)
 
 "results1"
 
 
-#' Output of function \code{\link{imputeByAttractors}}
+#' Example output of function \code{\link{imputeByAttractors}}
 #' 
 #' The results of performing imputation using identified 
 #' co-expressed attractors for data \code{\link{ge_10x_sample}}. 
-#' A list consisting of the imputed version of the expression matrix
-#' and dn updated indices matrix of dropout-suspected
+#' A list consisting of 
+#' \describe{
+#'     \item{imputed}{The imputed version of the expression matrix}
+#'     \item{dropout_ind}{An updated indices matrix of dropout-suspected}
+#' }
 #' 
 #' @usage data(results2)
 
 "results2"
 
 
-#' Output of function \code{\link{attractorFinding}}
+#' Example output of function \code{\link{attractorFinding}}
 #' 
 #' An attractor list containing the two co-expressed gene signatures 
 #' identified in \code{\link{ge_10x_sample}} by running function 
 #' \code{\link{attractorFinding}}. 
 #' 
-#' Each signature consists of the gene name and the corresponding mutual
-#' information between the gene and the converged metagene. 
+#' Each signature is a vector consisting of the normalized mutual 
+#' information between the corresponding gene and the converged metagene. 
 #' 
 #' @usage data(attractors)
 
 "attractors"
 
 
-#' Output of function \code{\link{ddImpute}} 
+#' Example output of function \code{\link{ddImpute}} 
 #' 
 #' The imputed version of the example scRNA-seq data
 #' \code{\link{ge_10x_example}} by ddImpute algorithm.

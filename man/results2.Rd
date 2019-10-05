@@ -3,7 +3,7 @@
 \docType{data}
 \name{results2}
 \alias{results2}
-\title{Output of function \code{\link{imputeByAttractors}}}
+\title{Example output of function \code{\link{imputeByAttractors}}}
 \format{An object of class \code{list} of length 2.}
 \usage{
 data(results2)
@@ -11,7 +11,10 @@ data(results2)
 \description{
 The results of performing imputation using identified 
 co-expressed attractors for data \code{\link{ge_10x_sample}}. 
-A list consisting of the imputed version of the expression matrix
-and dn updated indices matrix of dropout-suspected
+A list consisting of 
+\describe{
+    \item{imputed}{The imputed version of the expression matrix}
+    \item{dropout_ind}{An updated indices matrix of dropout-suspected}
+}
 }
 \keyword{datasets}

@@ -19,6 +19,6 @@ This function treats extreme values by winsorization.
 \details{
 For values that lie outside the 1.5*IQR limits, we cap 
 them by replacing those observations outside the lower
-limit with the value of 5th %ile, and those that lie 
-above the upper limit with the value of 95th %ile.
+limit with the value of 5th \%ile, and those that lie 
+above the upper limit with the value of 95th \%ile.
 }

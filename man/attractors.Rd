@@ -3,7 +3,7 @@
 \docType{data}
 \name{attractors}
 \alias{attractors}
-\title{Output of function \code{\link{attractorFinding}}}
+\title{Example output of function \code{\link{attractorFinding}}}
 \format{An object of class \code{list} of length 2.}
 \usage{
 data(attractors)
@@ -14,7 +14,7 @@ identified in \code{\link{ge_10x_sample}} by running function
 \code{\link{attractorFinding}}.
 }
 \details{
-Each signature consists of the gene name and the corresponding mutual
-information between the gene and the converged metagene.
+Each signature is a vector consisting of the normalized mutual 
+information between the corresponding gene and the converged metagene.
 }
 \keyword{datasets}

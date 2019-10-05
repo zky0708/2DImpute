@@ -3,7 +3,7 @@
 \docType{data}
 \name{results1}
 \alias{results1}
-\title{Output of function \code{\link{findDropouts}}}
+\title{Example output of function \code{\link{findDropouts}}}
 \format{An object of class \code{list} of length 2.}
 \usage{
 data(results1)
@@ -11,7 +11,9 @@ data(results1)
 \description{
 The results of performing dropout identification on data 
 \code{\link{ge_10x_sample}}. A list consisting of
-\item{dropout_ind}{A matrix in which each row contains the indices of a dropout}
-\item{J}{Calculated pairwise Jaccard Index between cells}
+\describe{
+    \item{dropout_ind}{A matrix in which each row contains the indices of a dropout}
+    \item{J}{Calculated pairwise Jaccard Index between cells}
+}
 }
 \keyword{datasets}
