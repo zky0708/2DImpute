@@ -7,7 +7,7 @@
 #' For each gene of interest, we use the top 20 genes involved 
 #' in the same signature as the predictive variables to fit a 
 #' linear regression model using cells where all those genes are
-#' expressed. Details can be found in \url{paper} 
+#' expressed. 
 #' 
 #' 
 #' @param exprs A log-transformed expression matrix, where
@@ -32,16 +32,6 @@
 #' zero entries, where in each contains the indices of the remaining
 #' dropouts after this step of imputation.}
 #' 
-#' 
-#' @examples 
-#' data(ge_10x_sample)
-#' data(attractors)
-#' data(results1)
-#' results2 <- imputeByAttractors(ge_10x_sample, results1$dropout_ind, attractors)
-#' # partically imputed version after this step
-#' imputed_part <- results2$imputed
-#' # updated dropout indices
-#' dropout_ind_updated <- results2$dropout_ind
 #' 
 #' 
 #' @export

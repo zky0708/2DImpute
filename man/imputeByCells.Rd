@@ -30,11 +30,3 @@ This function imputes dropout-suspected zeros by
 borrowing information from similar cells using
 k-nearest neighbors (kNN) regression.
 }
-\examples{
-# the following imputation is based on the results 
-processed by function 'imputeByAttractors'
-data(results2)
-imputed <- imputeByCells(results2$imputed, results2$dropout_ind)
-
-
-}

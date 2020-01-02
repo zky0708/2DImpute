@@ -46,15 +46,3 @@ in the same signature as the predictive variables to fit a
 linear regression model using cells where all those genes are
 expressed. Details can be found in \url{paper}
 }
-\examples{
-data(ge_10x_sample)
-data(attractors)
-data(results1)
-results2 <- imputeByAttractors(ge_10x_sample, results1$dropout_ind, attractors)
-# partically imputed version after this step
-imputed_part <- results2$imputed
-# updated dropout indices
-dropout_ind_updated <- results2$dropout_ind
-
-
-}

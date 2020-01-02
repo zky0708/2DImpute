@@ -23,13 +23,6 @@
 #' @return An imputed version of gene expression matrix. 
 #' 
 #' 
-#' @examples 
-#' # the following imputation is based on the results 
-#' processed by function 'imputeByAttractors'
-#' data(results2)
-#' imputed <- imputeByCells(results2$imputed, results2$dropout_ind)
-#' 
-#' 
 #' @export
 
 

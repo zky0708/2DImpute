@@ -48,9 +48,7 @@ R package \pkg{cafr}.
 }
 \examples{
 data(ge_10x_sample)
-data(results1)
-genes_involved <- unique(results1$dropout_ind[,1])
-attractors <- attractorFinding(exprs = ge_10x_sample, genes_involved = genes_involved)
+attractors <- attractorFinding(exprs = ge_10x_sample, genes_involved = c('CD3D', 'XIST'))
 
 
 }
