@@ -2,8 +2,8 @@
 
 export(attractorFinding)
 export(capping)
-export(ddImpute)
 export(findDropouts)
 export(imputeByAttractors)
 export(imputeByCells)
 export(jaccard_index)
+export(run_2DImpute)

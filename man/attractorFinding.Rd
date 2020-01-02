@@ -4,22 +4,29 @@
 \alias{attractorFinding}
 \title{Find all co-expressed signatures in the expression matrix}
 \usage{
-attractorFinding(exprs, dropout_ind, a = 5, epsilon = 1e-04,
-  mi_threshold = 0.4, verbose = TRUE)
+attractorFinding(
+  exprs,
+  genes_involved = NULL,
+  a = 5,
+  epsilon = 1e-04,
+  mi_threshold = 0.4,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{exprs}{A log-transformed expression data matrix of which 
 rows and columns represent genes and cells, respectively.}
 
-\item{dropout_ind}{A matrix in which each row contains the indices
-of zero entries that are suspected as dropouts.}
+\item{genes_involved}{A vector containing genes that will be used
+as seeds in the attractor finding process. Default is NULL, in which
+case all genes in the expression matrix will be used.}
 
 \item{a}{Exponent of mutual information (MI) used to create weighted
 vector for metagenes, one of parameters in function 
-\code{findAttractors} in package \pkg{cafr}. Default is 5.}
+\code{\link[cafr]{findAttractor}} in package \pkg{cafr}. Default is 5.}
 
 \item{epsilon}{Convergence threshold, one of parameters in function
-\code{findAttractors} in package \pkg{cafr}. Default is 1E-4.}
+\code{\link[cafr]{findAttractor}} in package \pkg{cafr}. Default is 1E-4.}
 
 \item{mi_threshold}{MI threshold (between 0 to 1) to determine the 
 gene membership of signatures. Genes with greater than or equal to 
@@ -42,7 +49,8 @@ R package \pkg{cafr}.
 \examples{
 data(ge_10x_sample)
 data(results1)
-attractors <- attractorFinding(ge = ge_10x_sample, dropout_ind = results1$dropout_ind)
+genes_involved <- unique(results1$dropout_ind[,1])
+attractors <- attractorFinding(exprs = ge_10x_sample, genes_involved = genes_involved)
 
 
 }

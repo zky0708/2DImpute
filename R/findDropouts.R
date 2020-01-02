@@ -14,16 +14,21 @@
 #' get imputed. Default is NULL, in which case all available 
 #' genes in the matrix exprs will be imputed.
 #' 
+#' @param ncores Number of cores to use. Default is 1.
+#' 
+#' @param return_J Whether to return the calculated pairwise Jaccard matrix between cells. 
+#' Default is FALSE.
+#' 
 #' @param verbose Whether to show the progress of dropout identification.
 #' Default is TRUE.
 #'
 #' @return A list with the following components:
 #' \item{dropout_ind}{A matrix in which each row contains the indices of a dropout}
-#' \item{J}{Calculated pairwise Jaccard Index between cells}
+#' \item{J}{(optional) Calculated pairwise Jaccard Index between cells}
 #'
 #' @examples 
 #' data(ge_10x_sample)
-#' results1 <- findDropouts(ge_10x_sample)
+#' results1 <- findDropouts(ge_10x_sample, ncores = 2, return_J = TRUE)
 #' # pairwise Jaccard Index between cells
 #' J <- results1$J
 #' # indices of identified dropouts
@@ -35,52 +40,51 @@
 
 # source('~/Downloads/imputation_project_code/jaccard_index.R')
 
-findDropouts <- function(exprs, t = 0.2, genes = NULL, verbose = TRUE){
+findDropouts <- function(exprs, t = 0.2, genes = NULL, ncores = 1, return_J = FALSE, verbose = TRUE){
 
   if(verbose)
     cat('Computing pairwise cell-cell Jaccard Index... \n')
 
-  J = jaccard_index(Matrix = exprs)
+  J = jaccard_index(Matrix = exprs, ncores = ncores)
 
   zero_ind <- which(exprs == 0, arr.ind = T)
   zero_ind[,1] <- rownames(exprs)[zero_ind[,1]]
   zero_ind[,2] <- colnames(exprs)[as.integer(zero_ind[,2])]
+  
+  if(!is.null(genes))
+    zero_ind <- zero_ind[which(zero_ind[,1] %in% genes),]
+  
   cells_all <- unique(zero_ind[,2])
 
   if(verbose)
     cat('Identifying dropout-suspected zeros... \n')
 
-  prob <- rep(0, length = nrow(zero_ind))
-  count = 0
-  for(c in cells_all){
+  similar_cells <- parallel::mclapply(cells_all, 
+                                      function(c) order(J[,c], decreasing = TRUE)[2:max(11, sum(J[,c] >= 0.5))], 
+                                      mc.cores = ncores)
+  names(similar_cells) <- cells_all
 
-    cell_id <- which(zero_ind[,2] == c)
+  prob_list <- parallel::mclapply(cells_all, 
+                                  function(c) sapply(zero_ind[which(zero_ind[,2] == c),1], 
+                                                     function(x) mean(exprs[x, similar_cells[[c]]] > 0)), 
+                                  mc.cores = ncores)
 
-    # identify similar cells according to Jaccard index
-    similar_cells <- setdiff(colnames(exprs)[J[,c] >= 0.5], c)
-
-    if(length(similar_cells) < 10)
-      # next
-      similar_cells <- colnames(exprs)[order(J[, c], decreasing = T)[2:11]]
-    
-    # estimate dropout likelihood for each zero-expressed gene in cell c
-    genes_zero <- zero_ind[cell_id, 1]
-    L = length(similar_cells)
-    prob[cell_id] <- sapply(genes_zero, function(x) sum(exprs[x, similar_cells] > 0)/L)
-
-    count = count + 1
-    if(verbose && count %% 100 == 0)
-      cat(count, 'cells completed. \n')
-
-  }
-
+  prob <- unlist(prob_list, use.names = F)
   dropout <- prob > t
   dropout_ind <- zero_ind[which(dropout == 1),]
   
-  if(!is.null(genes))
-    dropout_ind <- dropout_ind[which(dropout_ind[,1] %in% genes),]
+  if(verbose)
+    cat(paste(nrow(dropout_ind), 'out of', nrow(zero_ind), 'zeros (',
+              round(nrow(dropout_ind)/nrow(zero_ind)*100, digits = 2), 
+              '% ) are suspected as dropouts. \n'))
+  
+  
 
-  results = list(dropout_ind = dropout_ind, J = J)
+  if(return_J)
+    results = list(dropout_ind = dropout_ind, J = J)
+  else
+    results = list(dropout_ind = dropout_ind)
+  
   return(results)
 
 }

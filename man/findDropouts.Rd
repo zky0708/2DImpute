@@ -4,7 +4,14 @@
 \alias{findDropouts}
 \title{Identify dropout-suspected zeros from all zero entries}
 \usage{
-findDropouts(exprs, t = 0.2, genes = NULL, verbose = TRUE)
+findDropouts(
+  exprs,
+  t = 0.2,
+  genes = NULL,
+  ncores = 1,
+  return_J = FALSE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{exprs}{An input log-transformed data matrix. The rows and columns
@@ -17,13 +24,18 @@ Default is 0.2.}
 get imputed. Default is NULL, in which case all available 
 genes in the matrix exprs will be imputed.}
 
+\item{ncores}{Number of cores to use. Default is 1.}
+
+\item{return_J}{Whether to return the calculated pairwise Jaccard matrix between cells. 
+Default is FALSE.}
+
 \item{verbose}{Whether to show the progress of dropout identification.
 Default is TRUE.}
 }
 \value{
 A list with the following components:
 \item{dropout_ind}{A matrix in which each row contains the indices of a dropout}
-\item{J}{Calculated pairwise Jaccard Index between cells}
+\item{J}{(optional) Calculated pairwise Jaccard Index between cells}
 }
 \description{
 This function distinguishes zeros that are likely to be 
@@ -32,7 +44,7 @@ pairwise Jaccard Index between cells.
 }
 \examples{
 data(ge_10x_sample)
-results1 <- findDropouts(ge_10x_sample)
+results1 <- findDropouts(ge_10x_sample, return_J = TRUE)
 # pairwise Jaccard Index between cells
 J <- results1$J
 # indices of identified dropouts

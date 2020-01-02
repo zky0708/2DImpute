@@ -4,7 +4,7 @@
 \alias{imputeByCells}
 \title{Imputation based on cell-to-cell relationships}
 \usage{
-imputeByCells(exprs, dropout_ind, k = 10, verbose = TRUE)
+imputeByCells(exprs, dropout_ind, k = 10, ncores = 1, verbose = TRUE)
 }
 \arguments{
 \item{exprs}{A log-transformed expression matrix, where
@@ -16,6 +16,8 @@ second column for cell ID) that are suspected as dropouts.}
 
 \item{k}{Number of neighbors to be used in the kNN regression.
 Default is 10.}
+
+\item{ncores}{Number of cores to use. Default is 1.}
 
 \item{verbose}{Whether to show the progress of imputation.
 Default is TRUE.}

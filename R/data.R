@@ -59,10 +59,10 @@
 "attractors"
 
 
-#' Example output of function \code{\link{ddImpute}} 
+#' Example output of function \code{\link{run_2DImpute}} 
 #' 
 #' The imputed version of the example scRNA-seq data
-#' \code{\link{ge_10x_example}} by ddImpute algorithm.
+#' \code{\link{ge_10x_example}} by 2DImpute algorithm.
 #' 
 #' @usage data(imputed)
 

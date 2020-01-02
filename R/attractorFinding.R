@@ -8,15 +8,16 @@
 #' @param exprs A log-transformed expression data matrix of which 
 #' rows and columns represent genes and cells, respectively.
 #' 
-#' @param dropout_ind A matrix in which each row contains the indices
-#' of zero entries that are suspected as dropouts.
+#' @param genes_involved A vector containing genes that will be used
+#' as seeds in the attractor finding process. Default is NULL, in which
+#' case all genes in the expression matrix will be used.
 #' 
 #' @param a Exponent of mutual information (MI) used to create weighted
 #' vector for metagenes, one of parameters in function 
-#' \code{findAttractors} in package \pkg{cafr}. Default is 5.
+#' \code{\link[cafr]{findAttractor}} in package \pkg{cafr}. Default is 5.
 #' 
 #' @param epsilon Convergence threshold, one of parameters in function
-#' \code{findAttractors} in package \pkg{cafr}. Default is 1E-4.
+#' \code{\link[cafr]{findAttractor}} in package \pkg{cafr}. Default is 1E-4.
 #' 
 #' @param mi_threshold MI threshold (between 0 to 1) to determine the 
 #' gene membership of signatures. Genes with greater than or equal to 
@@ -33,35 +34,26 @@
 #' @examples 
 #' data(ge_10x_sample)
 #' data(results1)
-#' attractors <- attractorFinding(ge = ge_10x_sample, dropout_ind = results1$dropout_ind)
+#' genes_involved <- unique(results1$dropout_ind[,1])
+#' attractors <- attractorFinding(exprs = ge_10x_sample, genes_involved = genes_involved)
 #' 
 #' 
 #' @export
 
 
-attractorFinding <- function(exprs, dropout_ind, a = 5, epsilon = 1E-4, mi_threshold = 0.4, verbose = TRUE){
+attractorFinding <- function(exprs, genes_involved = NULL, a = 5, epsilon = 1E-4, mi_threshold = 0.4, verbose = TRUE){
   
-  genes_involved = unique(dropout_ind[,1])
+  if(is.null(genes_involved))
+    genes_involved = rownames(exprs)
   
-  if(length(genes_involved) == nrow(exprs)){
-    
-    # Order genes according to standard deviation (SD), starting with the one with highest SD
-    genes_zero <- unique(dropout_ind[,1])
-    sd_genes <- apply(exprs[genes_zero,], 1, sd)
-    genes_zero <- genes_zero[order(sd_genes, decreasing = T)]
-    
-    seeds <- genes_zero
-    
-  }else{
-    
-    seeds <- genes_involved
-  
-  }
+  # Order genes according to standard deviation (SD), starting with the one with highest SD
+  sd_genes <- apply(exprs[genes_involved,], 1, sd)
+  # seeds <- genes_involved[order(sd_genes, decreasing = T)[1:min(2000, length(genes_involved))]]
+  seeds <- genes_involved[order(sd_genes, decreasing = T)]
   
   attractors <- NULL
   topgenes <- NULL
-  # seeds <- genes_zero
-  
+
   if(verbose)
     cat('Identifying co-expressed attractor signatures...\n')
   
@@ -79,7 +71,6 @@ attractorFinding <- function(exprs, dropout_ind, a = 5, epsilon = 1E-4, mi_thres
       
     }else{
       
-      # metagene <- cafr::findAttractor(ge, ge[i,], a = a, epsilon = epsilon, verbose = F)
       metagene <- findAttractor_new(exprs, exprs[i,], i, a=a, threshold = mi_threshold, epsilon=epsilon)
       if(is.null(metagene)){
         seeds <- seeds[-1]
@@ -99,8 +90,9 @@ attractorFinding <- function(exprs, dropout_ind, a = 5, epsilon = 1E-4, mi_thres
         # for computational efficiency.
         seeds <- setdiff(seeds[-1], names(metagene)[which(metagene >= metagene[i])])
 
-        # Only retain attractors in which the 5th ranked gene has score >= mi_threshold (default: 0.4)
-        # Only retain attractors in which the score difference between the 1st and 2nd genes < 0.2
+        # Only retain attractors in which 
+        # (1) the 5th ranked gene has score >= mi_threshold (default: 0.4) AND
+        # (2) the score difference between the 1st and 2nd genes < 0.2
         if(metagene[5] >= mi_threshold && (metagene[1]-metagene[2]) < 0.2){
           
           topgenes <- c(topgenes, topgene)

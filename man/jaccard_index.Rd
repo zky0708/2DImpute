@@ -4,7 +4,7 @@
 \alias{jaccard_index}
 \title{Calculate pairwise Jaccard Index between cells}
 \usage{
-jaccard_index(Matrix, threshold = 0, verbose = FALSE)
+jaccard_index(Matrix, threshold = 0, ncores = 1)
 }
 \arguments{
 \item{Matrix}{An input matrix, where rows and columns represent
@@ -13,7 +13,7 @@ genes and cells, respectively.}
 \item{threshold}{The threshold for generating binary matrix.
 Values greater than it are set to 1, otherwise 0. Default is 0.}
 
-\item{verbose}{When TRUE, it will show the progress of calculation.}
+\item{ncores}{Number of cores to use. Default is 1.}
 }
 \value{
 A symmetric matrix containing pairwise Jaccard Index values

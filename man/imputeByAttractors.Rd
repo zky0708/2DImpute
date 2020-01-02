@@ -4,8 +4,13 @@
 \alias{imputeByAttractors}
 \title{Imputation based on co-expressed gene attractor signatures}
 \usage{
-imputeByAttractors(exprs, dropout_ind, attractor_list,
-  mi_threshold = 0.4, verbose = TRUE)
+imputeByAttractors(
+  exprs,
+  dropout_ind,
+  attractor_list,
+  mi_threshold = 0.4,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{exprs}{A log-transformed expression matrix, where

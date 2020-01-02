@@ -14,6 +14,8 @@
 #' @param k Number of neighbors to be used in the kNN regression.
 #' Default is 10.
 #' 
+#' @param ncores Number of cores to use. Default is 1.
+#' 
 #' @param verbose Whether to show the progress of imputation.
 #' Default is TRUE.
 #' 
@@ -31,7 +33,7 @@
 #' @export
 
 
-imputeByCells <- function(exprs, dropout_ind, k = 10, verbose = TRUE){
+imputeByCells <- function(exprs, dropout_ind, k = 10, ncores = 1, verbose = TRUE){
   
   if(verbose)
     cat(nrow(dropout_ind), 'entries remained to impute. \n')
@@ -43,7 +45,7 @@ imputeByCells <- function(exprs, dropout_ind, k = 10, verbose = TRUE){
   cells_all <- colnames(exprs)
   
   cells_to_impute <- names(sort(table(dropout_ind[,2]), decreasing = F))
-  cells_nonzero <- apply(ge, 1, function(x) names(which(x > 0)))
+  cells_nonzero <- apply(exprs, 1, function(x) names(which(x > 0)))
   
   count = length(cells_to_impute)
   for (c in cells_to_impute) {
@@ -52,8 +54,11 @@ imputeByCells <- function(exprs, dropout_ind, k = 10, verbose = TRUE){
     
     # use genes excluding those to be imputed to calculate the pairwise cell-to-cell correlation
     tmp = setdiff(genes_all, genes_to_impute)
-    P <- sapply(cells_all, function(x) cor(imputed[tmp, x], imputed[tmp, c]))
 
+    P <- unlist(parallel::mclapply(cells_all, 
+                                   function(x) cor(imputed[tmp, x], imputed[tmp, c]), mc.cores = ncores))
+    names(P) <- cells_all
+    
     nearest_neighbors <- names(sort(P, decreasing = T)[2:(k+1)])
     tmp = imputed[genes_to_impute, nearest_neighbors]; 
     tmp[tmp == 0] = NA; 

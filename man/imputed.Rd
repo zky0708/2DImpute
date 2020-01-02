@@ -3,13 +3,13 @@
 \docType{data}
 \name{imputed}
 \alias{imputed}
-\title{Example output of function \code{\link{ddImpute}}}
+\title{Example output of function \code{\link{run_2DImpute}}}
 \format{An object of class \code{matrix} with 3774 rows and 338 columns.}
 \usage{
 data(imputed)
 }
 \description{
 The imputed version of the example scRNA-seq data
-\code{\link{ge_10x_example}} by ddImpute algorithm.
+\code{\link{ge_10x_example}} by 2DImpute algorithm.
 }
 \keyword{datasets}
