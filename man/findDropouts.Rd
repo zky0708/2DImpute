@@ -44,7 +44,7 @@ pairwise Jaccard Index between cells.
 }
 \examples{
 data(ge_10x_sample)
-results1 <- findDropouts(ge_10x_sample, return_J = TRUE)
+results1 <- findDropouts(ge_10x_sample, ncores = 2, return_J = TRUE)
 # pairwise Jaccard Index between cells
 J <- results1$J
 # indices of identified dropouts
