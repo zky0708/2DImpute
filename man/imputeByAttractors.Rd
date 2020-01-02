@@ -44,5 +44,5 @@ co-expressed attractor signatures.
 For each gene of interest, we use the top 20 genes involved 
 in the same signature as the predictive variables to fit a 
 linear regression model using cells where all those genes are
-expressed. Details can be found in \url{paper}
+expressed.
 }
