@@ -71,12 +71,12 @@ run_2DImpute <- function(exprs, t = 0.2, genes = NULL, k = 10, ncores = 1,
   results2 <- imputeByAttractors(exprs = exprs, dropout_ind = dropout1, 
                                  attractor_list = attractors, verbose = verbose)
   
-  imputed <- imputeByCells(exprs = results2$imputed, dropout_ind = results2$dropout_ind, 
+  imputed_exprs <- imputeByCells(exprs = results2$imputed, dropout_ind = results2$dropout_ind, 
                            k = k, ncores = ncores, verbose = verbose)
   
   if(return_attractors)
-    return(list(imputed = imputed, attractors = attractors))
+    return(list(imputed = imputed_exprs, attractors = attractors))
   else
-    return(imputed)
+    return(imputed_exprs)
   
 }
