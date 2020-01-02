@@ -52,7 +52,7 @@ res <- run_2DImpute(
   ncores = 2, 
   return_attractors = TRUE
   )
-imputed <- res$imputed
+imputed_exprs <- res$imputed
 attractors <- res$attractors
 
 # Full imputation
