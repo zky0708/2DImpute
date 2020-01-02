@@ -60,15 +60,16 @@ by using information from two-dimensional relationships
 data(ge_10x_sample)
 
 # Fast demonstration
-imputed <- run_2DImpute(exprs = ge_10x_sample, genes = c('XIST', 'CD3D'), ncores = 2)
+res <- run_2DImpute(exprs = ge_10x_sample, genes = c('XIST', 'CD3D'), ncores = 2)
+imputed_exprs <- res$imputed
 
 # Return identified co-expressed attractor signatures
 res <- run_2DImpute(exprs = ge_10x_sample, genes = c('XIST', 'CD3D'), ncores = 2, return_attractors = TRUE)
-imputed <- res$imputed
+imputed_exprs <- res$imputed
 attractors <- res$attractors
 
 # Full imputation
-imputed <- run_2DImpute(exprs = ge_10x_sample, ncores = 2)
-
+res <- run_2DImpute(exprs = ge_10x_sample, ncores = 2)
+imputed_exprs <- res$imputed
 
 }
