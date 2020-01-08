@@ -11,7 +11,7 @@ install_github("zky0708/2DImpute")
 ```
 
 ## Quick start
-`2DImpute` takes a log-transformed normalized scRNA-seq data matrix (genes in rows and cells in columns) as input, and outputs the imputed version with the same dimension.
+`2DImpute` takes as input a normalized scRNA-seq data matrix (genes in rows and cells in columns) with or without log-transformation. It outputs the imputed data in the same dimension and the same log-transformation.
 1. Load the R package ("R2DImpute")
 ```R
 require(R2DImpute)
@@ -25,6 +25,7 @@ res <- run_2DImpute(
   genes = NULL,               # A vector of genes of which the zeros will get imputed. If it is NULL (default), all genes will be considered.
   k = 10,                     # Number of nearest neighbors.
   ncores = 1,                 # Number of cores to be used.
+  log = TRUE                  # Whether the input data is log-transformed. 
   return_J = FALSE,           # Whether to return the calculated pairwise Jaccard matrix between cells.
   return_attractors = FALSE,  # Whether to return the identified co-expressed gene attractor signatures.
   verbose = TRUE              # Whether to show the progress of imputation.
