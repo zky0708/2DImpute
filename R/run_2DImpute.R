@@ -23,6 +23,9 @@
 #' 
 #' @param ncores Number of cores to be used. Default is 1.
 #' 
+#' @param log Whether the input data matrix is log-transformed.
+#' Default is TRUE. 
+#' 
 #' @param return_J Whether to return the calculated pairwise
 #' Jaccard matrix between cells in the step of \code{\link{findDropouts}}. 
 #' Default is FALSE. 
@@ -59,8 +62,12 @@
 #' @export
 
 
-run_2DImpute <- function(exprs, t = 0.2, genes = NULL, k = 10, ncores = 1, 
+run_2DImpute <- function(exprs, t = 0.2, genes = NULL, k = 10, ncores = 1, log = TRUE,
                          return_J = FALSE, return_attractors = FALSE, verbose = TRUE){
+  
+  if(!log)
+    exprs <- log2(exprs + 1)
+  
   
   results1 <- findDropouts(exprs = exprs, t = t, genes = genes, ncores = ncores, 
                            return_J = return_J, verbose = verbose)
@@ -74,6 +81,9 @@ run_2DImpute <- function(exprs, t = 0.2, genes = NULL, k = 10, ncores = 1,
   
   imputed_exprs <- imputeByCells(exprs = results2$imputed, dropout_ind = results2$dropout_ind, 
                            k = k, ncores = ncores, verbose = verbose)
+  
+  if(!log)
+    imputed_exprs <- round(2^imputed_exprs - 1, digits = 2)
   
   if(return_attractors)
     return(list(imputed = imputed_exprs, attractors = attractors))
