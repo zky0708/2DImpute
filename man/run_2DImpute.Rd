@@ -10,6 +10,7 @@ run_2DImpute(
   genes = NULL,
   k = 10,
   ncores = 1,
+  log = TRUE,
   return_J = FALSE,
   return_attractors = FALSE,
   verbose = TRUE
@@ -33,6 +34,9 @@ neighbor regression in the step of \code{\link{imputeByCells}}.
 Default is 10.}
 
 \item{ncores}{Number of cores to be used. Default is 1.}
+
+\item{log}{Whether the input data matrix is log-transformed.
+Default is TRUE.}
 
 \item{return_J}{Whether to return the calculated pairwise
 Jaccard matrix between cells in the step of \code{\link{findDropouts}}. 
