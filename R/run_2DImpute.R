@@ -23,7 +23,7 @@
 #' 
 #' @param ncores Number of cores to be used. Default is 1.
 #' 
-#' @param log Whether the input data matrix is log-transformed.
+#' @param log_input Whether the input data matrix is log-transformed.
 #' Default is TRUE. 
 #' 
 #' @param return_J Whether to return the calculated pairwise
@@ -62,10 +62,10 @@
 #' @export
 
 
-run_2DImpute <- function(exprs, t = 0.2, genes = NULL, k = 10, ncores = 1, log = TRUE,
+run_2DImpute <- function(exprs, t = 0.2, genes = NULL, k = 10, ncores = 1, log_input = TRUE,
                          return_J = FALSE, return_attractors = FALSE, verbose = TRUE){
   
-  if(!log)
+  if(!log_input)
     exprs <- log2(exprs + 1)
   
   
@@ -82,7 +82,7 @@ run_2DImpute <- function(exprs, t = 0.2, genes = NULL, k = 10, ncores = 1, log =
   imputed_exprs <- imputeByCells(exprs = results2$imputed, dropout_ind = results2$dropout_ind, 
                            k = k, ncores = ncores, verbose = verbose)
   
-  if(!log)
+  if(!log_input)
     imputed_exprs <- round(2^imputed_exprs - 1, digits = 2)
   
   if(return_attractors)
