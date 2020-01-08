@@ -10,7 +10,7 @@ run_2DImpute(
   genes = NULL,
   k = 10,
   ncores = 1,
-  log = TRUE,
+  log_input = TRUE,
   return_J = FALSE,
   return_attractors = FALSE,
   verbose = TRUE
@@ -35,7 +35,7 @@ Default is 10.}
 
 \item{ncores}{Number of cores to be used. Default is 1.}
 
-\item{log}{Whether the input data matrix is log-transformed.
+\item{log_input}{Whether the input data matrix is log-transformed.
 Default is TRUE.}
 
 \item{return_J}{Whether to return the calculated pairwise
