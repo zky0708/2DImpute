@@ -25,7 +25,7 @@ res <- run_2DImpute(
   genes = NULL,               # A vector of genes of which the zeros will get imputed. If it is NULL (default), all genes will be considered.
   k = 10,                     # Number of nearest neighbors.
   ncores = 1,                 # Number of cores to be used.
-  log = TRUE                  # Whether the input data is log-transformed. 
+  log_input = TRUE            # Whether the input data is log-transformed. 
   return_J = FALSE,           # Whether to return the calculated pairwise Jaccard matrix between cells.
   return_attractors = FALSE,  # Whether to return the identified co-expressed gene attractor signatures.
   verbose = TRUE              # Whether to show the progress of imputation.
