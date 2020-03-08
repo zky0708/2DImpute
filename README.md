@@ -1,5 +1,7 @@
 # 2DImpute
-An imputation method that recovers dropout events in single cell RNA sequencing (scRNA-seq) data from relationships in two dimensions.
+An imputation method that recovers false zeros (known as dropouts) in single cell RNA sequencing (scRNA-seq) data. It features preventing excessive correction by predicting false zeros and imputing their values accurately by making use of the interrelationships between both genes and cells. 
+
+The users can refer to our paper published at [Bioinformatics](https://doi.org/10.1093/bioinformatics/btaa148) for a detailed description of the modeling and applications. 
 
 ## Installation
 You can install 2DImpute from GitHub with:
